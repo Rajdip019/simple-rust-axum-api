@@ -1,0 +1,22 @@
+[package]
+name = "rust-crud-api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Axum
+axum = { version= "0.7.4", features = ["macros"] }
+tower-http = { version = "0.5", features = ["fs"] }
+tower-cookies = "0.10.0"
+# Serde
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0.114"
+tokio = { version = "1", features = ["full"] }
+lazy-regex = "3.1.0"
+async-trait = "0.1.77"
+
+[dev-dependencies]
+anyhow = "1.0.80"
+httpc-test = "0.1.9"
