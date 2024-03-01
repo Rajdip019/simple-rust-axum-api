@@ -91,6 +91,7 @@ fn routes_static() -> Router {
 // Routes Hello
 fn routes_hello() -> Router {
     Router::new()
+        .route("/", get(handler_hello))
         .route("/hello", get(handler_hello))
         .route("/hello/:name", get(handler_hello_path))
 }
@@ -104,7 +105,7 @@ struct HelloParams {
 async fn handler_hello(Query(params): Query<HelloParams>) -> impl IntoResponse {
     let name = params.name.as_deref().unwrap_or("World");
     println!("handler_hello called!");
-    Html(format!("Hello, <strong>{name}</strong>"))
+    Html(format!("Hello, <strong>{name} this is auto deployed</strong>"))
 }
 
 // eg: http://localhost:8080/hello/Rajdeep
@@ -112,3 +113,5 @@ async fn handler_hello_path(Path(name): Path<String>) -> impl IntoResponse {
     println!("handler_hello_path called!");
     Html(format!("Hello, <strong>{name}</strong>"))
 }
+
+
