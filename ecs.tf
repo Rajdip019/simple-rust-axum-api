@@ -1,5 +1,14 @@
 resource "aws_ecs_cluster" "ecs" {
   name = "test_cluster"
+  configuration {
+    execute_command_configuration {
+      kms_key_id = aws_kms_key.ecs-logs-key.arn
+      log_configuration {
+        cloud_watch_encryption_enabled = true
+        cloud_watch_log_group_name     = aws_cloudwatch_log_group.ecs-logs.name
+      }
+    }
+  }
 }
 
 resource "aws_ecs_service" "test-service" {
@@ -40,14 +49,22 @@ resource "aws_ecs_task_definition" "td" {
           hostPort      = 8080
         }
       ]
+      log_configuration = {
+        log_driver = "awslogs"
+        options = {
+          "awslogs-create-group"  = true,
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs-logs.name
+          "awslogs-region"        = "ap-south-1"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
     }
   ])
   family                   = "test-task"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 2048
   memory                   = 4096
-  network_mode = "awsvpc"
+  network_mode             = "awsvpc"
   task_role_arn            = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
-
 }
