@@ -31,8 +31,8 @@ resource "aws_ecs_task_definition" "td" {
     {
       name      = "test-container"
       image     = "262318881725.dkr.ecr.ap-south-1.amazonaws.com/test_repo"
-      cpu       = 256
-      memory    = 512
+      cpu       = 2048
+      memory    = 4096
       essential = true
       portMappings = [
         {
@@ -44,8 +44,8 @@ resource "aws_ecs_task_definition" "td" {
   ])
   family                   = "test-task"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = 2048
+  memory                   = 4096
   network_mode = "awsvpc"
   task_role_arn            = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
   execution_role_arn       = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
