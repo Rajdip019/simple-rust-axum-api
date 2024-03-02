@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:262318881725:task-definition/test-task:8",
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:262318881725:task-definition/test-task:11",
     "containerDefinitions": [
         {
             "name": "test-container",
@@ -17,6 +17,15 @@
             "environment": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/test-task",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
             "systemControls": []
         }
     ],
@@ -24,12 +33,21 @@
     "taskRoleArn": "arn:aws:iam::262318881725:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::262318881725:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 8,
+    "revision": 11,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
         {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
             "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
         },
         {
             "name": "com.amazonaws.ecs.capability.task-iam-role"
@@ -42,6 +60,9 @@
         },
         {
             "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
         }
     ],
     "placementConstraints": [],
@@ -58,7 +79,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-03-02T12:00:25.715Z",
+    "registeredAt": "2024-03-02T12:17:04.577Z",
     "registeredBy": "arn:aws:iam::262318881725:user/Vishant",
     "tags": []
 }
