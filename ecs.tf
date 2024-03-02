@@ -3,10 +3,8 @@ resource "aws_ecs_cluster" "ecs" {
   configuration {
 
     execute_command_configuration {
-      kms_key_id = aws_kms_key.ecs-logs-key.arn
       logging    = "OVERRIDE"
       log_configuration {
-        cloud_watch_encryption_enabled = true
         cloud_watch_log_group_name     = aws_cloudwatch_log_group.ecs-logs.name
       }
     }
@@ -42,7 +40,7 @@ resource "aws_ecs_task_definition" "td" {
   container_definitions = jsonencode([
     {
       name      = "test-container"
-      image     = "262318881725.dkr.ecr.ap-south-1.amazonaws.com/test_repo:latest"
+      image     = "262318881725.dkr.ecr.ap-south-1.amazonaws.com/test_repo"
       cpu       = 0
       essential = true
       portMappings = [
