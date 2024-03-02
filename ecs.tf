@@ -42,21 +42,23 @@ resource "aws_ecs_task_definition" "td" {
   container_definitions = jsonencode([
     {
       name      = "test-container"
-      image     = "262318881725.dkr.ecr.ap-south-1.amazonaws.com/test_repo"
-      cpu       = 2048
-      memory    = 4096
+      image     = "262318881725.dkr.ecr.ap-south-1.amazonaws.com/test_repo:latest"
+      cpu       = 0
       essential = true
       portMappings = [
         {
+          name          = "test-container-http"
           containerPort = 8080
           hostPort      = 8080
+          protocol      = "tcp"
+          appProtocol   = "http"
         }
       ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-create-group"  = "true",
-          "awslogs-group"         = aws_cloudwatch_log_group.ecs-logs.name,
+          "awslogs-create-group"  = "true"
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs-logs.name
           "awslogs-region"        = "ap-south-1"
           "awslogs-stream-prefix" = "ecs"
         }

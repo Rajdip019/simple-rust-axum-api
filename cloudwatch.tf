@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "ecs-logs" {
-  name              = "ecs-logs"
+  name              = "/ecs/test_cluster"
   retention_in_days = 7
   tags = {
     Name = "ecs-logs"
