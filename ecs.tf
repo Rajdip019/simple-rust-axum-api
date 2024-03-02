@@ -35,6 +35,7 @@ resource "aws_ecs_service" "test-service" {
     container_name   = "test-container"
     container_port   = 8080
   }
+
 }
 
 resource "aws_ecs_task_definition" "td" {
@@ -55,7 +56,7 @@ resource "aws_ecs_task_definition" "td" {
         logDriver = "awslogs"
         options = {
           "awslogs-create-group"  = "true",
-          "awslogs-group"         = "/ecs/test-task"
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs-logs.name,
           "awslogs-region"        = "ap-south-1"
           "awslogs-stream-prefix" = "ecs"
         }
