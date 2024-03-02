@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:262318881725:task-definition/test-task:5",
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:262318881725:task-definition/test-task:8",
     "containerDefinitions": [
         {
             "name": "test-container",
@@ -24,7 +24,7 @@
     "taskRoleArn": "arn:aws:iam::262318881725:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::262318881725:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 5,
+    "revision": 8,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -54,7 +54,11 @@
     ],
     "cpu": "2048",
     "memory": "4096",
-    "registeredAt": "2024-03-02T10:43:51.453Z",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-03-02T12:00:25.715Z",
     "registeredBy": "arn:aws:iam::262318881725:user/Vishant",
     "tags": []
 }
