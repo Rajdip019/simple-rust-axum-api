@@ -3,7 +3,7 @@ resource "aws_lb" "test-balancer" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg-test.id]
-  subnets            = [aws_subnet.public-sn1.id, aws_subnet.public-sn2.id]
+  subnets            = [aws_subnet.public-sn1.id, aws_subnet.public-sn2.id, aws_subnet.public-sn3.id]
 
   enable_deletion_protection = false
 
@@ -20,7 +20,7 @@ resource "aws_lb" "test-balancer" {
 
 resource "aws_lb_target_group" "test-balancer-target-group" {
     name     = "test-balancer-target-group"
-    port     = 8080
+    port     = var.port
     protocol = "HTTP"
     vpc_id   = aws_vpc.vpc.id
     target_type = "ip"
@@ -43,7 +43,7 @@ resource "aws_lb_target_group" "test-balancer-target-group" {
 
 resource "aws_lb_listener" "test_balancer_listener" {
     load_balancer_arn = aws_lb.test-balancer.arn
-    port              = "8080"
+    port              = "${var.port}"
     protocol          = "HTTP"
 
     default_action {
