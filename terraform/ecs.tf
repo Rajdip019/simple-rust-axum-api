@@ -24,14 +24,14 @@ resource "aws_ecs_service" "test-service" {
 
   network_configuration {
     assign_public_ip = true
-    subnets          = [aws_subnet.public-sn1.id, aws_subnet.public-sn2.id]
+    subnets          = [aws_subnet.public-sn1.id, aws_subnet.public-sn2.id, aws_subnet.public-sn3.id]
     security_groups  = [aws_security_group.sg-test.id]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.test-balancer-target-group.arn
     container_name   = "test-container"
-    container_port   = 8080
+    container_port   = var.port
   }
 
 }
@@ -46,8 +46,8 @@ resource "aws_ecs_task_definition" "td" {
       portMappings = [
         {
           name          = "test-container-http"
-          containerPort = 8080
-          hostPort      = 8080
+          containerPort = var.port
+          hostPort      = var.port
           protocol      = "tcp"
           appProtocol   = "http"
         }
@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "td" {
         options = {
           "awslogs-create-group"  = "true"
           "awslogs-group"         = aws_cloudwatch_log_group.ecs-logs.name
-          "awslogs-region"        = "ap-south-1"
+          "awslogs-region"        = var.region
           "awslogs-stream-prefix" = "ecs"
         }
       }
@@ -67,11 +67,11 @@ resource "aws_ecs_task_definition" "td" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 2048
   memory                   = 4096
-  network_mode             = "awsvpc"
+  network_mode             = var.network_mode
   runtime_platform {
-    operating_system_family = "LINUX"
-    cpu_architecture        = "X86_64"
+    operating_system_family = var.operating_system_family
+    cpu_architecture        = var.cpu_architecture
   }
-  task_role_arn      = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
-  execution_role_arn = "arn:aws:iam::262318881725:role/ecsTaskExecutionRole"
+  task_role_arn      = var.ecs_execution_role
+  execution_role_arn = var.ecs_execution_role
 }
